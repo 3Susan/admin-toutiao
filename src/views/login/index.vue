@@ -23,8 +23,9 @@
 </template>
 <script>
 import { loginUser } from '@/api/login.js'
+import { setToken } from '@/utils/localStorage'
 export default {
-  name: 'login',
+  name: 'loginIndex',
   data () {
     return {
       user: {
@@ -84,7 +85,11 @@ export default {
           message: '登录成功',
           type: 'success'
         })
-        console.log(res.data)
+        // 本地保存请求token
+        setToken('token', res.data.token)
+        // 跳转到首页
+        // this.$router.push('/')
+        this.$router.push({ name: 'home' })
       }, error => { // 登录失败
         console.log(error)
         this.loading = false // 显示loading结束的效果
@@ -92,6 +97,7 @@ export default {
           message: '密码或手机号有误',
           type: 'error'
         })
+        throw new Error('密码或手机号有误')
       })
     }
 
