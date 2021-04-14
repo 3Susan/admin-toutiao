@@ -4,6 +4,7 @@ import { getToken } from '@/utils/localStorage'
 import Login from '@/views/login'
 import Home from '@/views/home'
 import Layout from '@/views/layout'
+import Article from '@/views/article'
 Vue.use(VueRouter)
 
 const routes = [
@@ -21,6 +22,11 @@ const routes = [
         path: '/',
         name: 'home',
         component: Home
+      },
+      {
+        path: '/article',
+        name: 'article',
+        component: Article
       }
     ]
   }
@@ -38,7 +44,8 @@ router.beforeEach((to, from, next) => { // before enter each route component
     if (token) {
       next()
     } else {
-      router.push('/login') // 没有token去login页面登录
+      // router.push('/login') // 没有token去login页面登录
+      next({ path: '/login' })
     }
   } else {
     next() // 放行

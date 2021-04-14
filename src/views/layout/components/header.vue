@@ -37,9 +37,7 @@ export default {
   },
   created () {
     // 延迟获取用户信息
-    setTimeout(() => {
-      this.loadingUserProfile()
-    }, 500)
+    this.loadingUserProfile()
   },
   methods: {
     handleCommand (command) {
@@ -48,6 +46,7 @@ export default {
     // 获取用户信息
     loadingUserProfile () {
       const token = getToken('token') // 第一次登录保存用户的token
+      console.log(token)
       getUserProfile(token).then(res => {
         this.user = res.data
       })
@@ -70,6 +69,7 @@ export default {
             message: '退出成功'
           })
           removeToken('token') // 移除token
+          this.$router.push('/login') // 跳转到登录页面
         })
         .catch(action => {
           this.$message({

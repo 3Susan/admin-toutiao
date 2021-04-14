@@ -89,7 +89,9 @@ export default {
         setToken('token', res.data.token)
         // 跳转到首页
         // this.$router.push('/')
-        this.$router.push({ name: 'home' })
+        setTimeout(() => {
+          this.$router.push({ name: 'home' })
+        }, 200)
       }, error => { // 登录失败
         console.log(error)
         this.loading = false // 显示loading结束的效果
