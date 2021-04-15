@@ -22,3 +22,32 @@ export const deleteAeticleInfo = (target) => {
     url: `/mp/v1_0/articles/${target}`
   })
 }
+// 发表文章内容
+export const pulishArticleInfo = (data, draft1) => {
+  return request({
+    method: 'POST',
+    url: '/mp/v1_0/articles',
+    data,
+    params: {
+      draft: draft1
+    }
+  })
+}
+// 获取指定文章内容
+export const getArticleInfo = id => {
+  return request({
+    method: 'GET',
+    url: `/mp/v1_0/articles/${id}`
+  })
+}
+// 编辑指定文章内容
+export const editArticleInfo = (id, data, draft1) => {
+  return request({
+    method: 'PUT',
+    url: `/mp/v1_0/articles/${id}`,
+    data,
+    params: {
+      draft: draft1
+    }
+  })
+}

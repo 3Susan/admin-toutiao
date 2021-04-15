@@ -92,7 +92,7 @@
           label="操作"
           align="center">
           <template slot-scope="scope">
-            <el-button type="primary" icon="el-icon-edit" size="mini" circle></el-button>
+            <el-button type="primary" icon="el-icon-edit" size="mini" @click="$router.push('/pulish/?id='+scope.row.id)" circle></el-button>
             <el-button type="danger" icon="el-icon-delete" size="mini" @click="deleteArticle(scope.row.id)" circle></el-button>
           </template>
         </el-table-column>

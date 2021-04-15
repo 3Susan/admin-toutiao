@@ -46,7 +46,6 @@ export default {
     // 获取用户信息
     loadingUserProfile () {
       const token = getToken('token') // 第一次登录保存用户的token
-      console.log(token)
       getUserProfile(token).then(res => {
         this.user = res.data
       })

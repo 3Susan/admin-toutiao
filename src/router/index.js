@@ -5,6 +5,7 @@ import Login from '@/views/login'
 import Home from '@/views/home'
 import Layout from '@/views/layout'
 import Article from '@/views/article'
+import Pulish from '@/views/pulish'
 Vue.use(VueRouter)
 
 const routes = [
@@ -27,6 +28,11 @@ const routes = [
         path: '/article',
         name: 'article',
         component: Article
+      },
+      {
+        path: '/pulish',
+        name: 'pulish',
+        component: Pulish
       }
     ]
   }
