@@ -6,6 +6,7 @@ import Home from '@/views/home'
 import Layout from '@/views/layout'
 import Article from '@/views/article'
 import Pulish from '@/views/pulish'
+import Image from '@/views/image'
 Vue.use(VueRouter)
 
 const routes = [
@@ -33,6 +34,11 @@ const routes = [
         path: '/pulish',
         name: 'pulish',
         component: Pulish
+      },
+      {
+        path: '/image',
+        name: 'image',
+        component: Image
       }
     ]
   }

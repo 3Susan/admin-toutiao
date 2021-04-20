@@ -12,3 +12,11 @@ export const handleImage = data => {
     data
   })
 }
+// 获取所有的图片素材
+export const getAllImage = (params) => {
+  return request({
+    url: '/mp/v1_0/user/images',
+    method: 'GET',
+    params
+  })
+}
