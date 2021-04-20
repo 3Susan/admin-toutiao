@@ -31,6 +31,23 @@
                 <!-- 图片 -->
                 <el-image  style="height:100px" :src="img.url" fit="cover"></el-image>
                 <!-- /图片 -->
+                <div class="bottom-col">
+                   <el-button size="mini"
+                    :class="{'el-icon-star-on': img.is_collected,'el-icon-star-off': !img.is_collected}"
+                    type="warning"
+                    style="font-size:10px"
+                    circle
+                    :loading="img.loading"
+                    @click="collectImge(img)"
+                  ></el-button>
+                    <el-button size="mini"
+                      type="danger"
+                      icon="el-icon-delete"
+                      style="font-size:10px"
+                      circle
+                      @click="deleteImage(img)"
+                    ></el-button>
+                </div>
               </el-col>
             </el-row>
           </div>
@@ -54,6 +71,7 @@
          modal-append-to-body： 是否在body上下具体看组件解析
      -->
     <el-dialog title="上传图片素材"
+    v-if="dialogUpdateLoader"
     :visible.sync="dialogUpdateLoader"
     :modal-append-to-body="false"
     >
@@ -82,7 +100,7 @@
 </template>
 <script>
 import { getToken } from '@/utils/localStorage'
-import { getAllImage } from '@/api/img'
+import { getAllImage, collectImage, deleteImage } from '@/api/img'
 export default {
   name: 'imageIndex',
   data () {
@@ -105,7 +123,11 @@ export default {
         collect,
         per_page: this.perPage
       }).then(res => {
-        this.AllImages = res.data.results
+        const results = res.data.results
+        results.forEach(item => {
+          item.loading = false
+        })
+        this.AllImages = results
         this.ImageCount = res.data.total_count
       })
     },
@@ -114,17 +136,24 @@ export default {
         collect,
         per_page: this.perPage
       }).then(res => {
-        this.AllImages = res.data.results
+        const results = res.data.results
+        results.forEach(item => {
+          item.loading = false
+        })
+        this.AllImages = results
         this.ImageCount = res.data.total_count
       })
     },
-    changeCount (index, collect) {
+    changeCount (index) {
       getAllImage({
-        collect,
         per_page: this.perPage,
         page: index
       }).then(res => {
-        this.AllImages = res.data.results
+        const results = res.data.results
+        results.forEach(item => {
+          item.loading = false
+        })
+        this.AllImages = results
       })
     },
     upLoadSuccess () {
@@ -132,6 +161,28 @@ export default {
       this.dialogUpdateLoader = false
       // 重新获取数据
       this.loadingAllImage(false)
+    },
+    collectImge (img) {
+      const id = img.id
+      const isCollect = !img.is_collected
+      img.loading = !img.loading
+      setTimeout(() => {
+        collectImage(id, isCollect).then(res => {
+          this.loadingAllImage(!isCollect)
+        })
+        img.loading = !img.loading
+      }, 2000)
+    },
+    deleteImage (img) {
+      const id = img.id
+      const isCollect = this.collect
+      deleteImage(id).then(res => {
+        this.$message({
+          type: 'success',
+          message: '删除成功'
+        })
+        this.loadingAllImage(isCollect)
+      })
     }
   }
 }
@@ -143,8 +194,27 @@ export default {
     display: flex;
     justify-content: space-between;
   }
-  .el-image {
-    margin-bottom: 10px;
+  .bottom-col[data-v-304287f4] {
+    display: flex;
+    justify-content: space-between;
+  }
+  .el-col {
+    display: flex;
+    justify-content: space-evenly;
+    position: relative;
+    .el-image {
+      margin-bottom: 10px;
+      position: relative;
+    }
+    .bottom-col {
+      height:30px;
+      background-color:rgba(225, 225, 225, .3);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0 15px 5px 15px;
+    }
   }
   .pagination {
     padding-left: 300px;

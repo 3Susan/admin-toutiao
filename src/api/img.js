@@ -20,3 +20,20 @@ export const getAllImage = (params) => {
     params
   })
 }
+// 收藏选中图片
+export const collectImage = (id, isCollect) => {
+  return request({
+    method: 'PUT',
+    url: `/mp/v1_0/user/images/${id}`,
+    data: {
+      collect: isCollect
+    }
+  })
+}
+// 删除选中图片
+export const deleteImage = (id) => {
+  return request({
+    method: 'DELETE',
+    url: `/mp/v1_0/user/images/${id}`
+  })
+}
