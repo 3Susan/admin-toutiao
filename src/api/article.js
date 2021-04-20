@@ -51,3 +51,16 @@ export const editArticleInfo = (id, data, draft1) => {
     }
   })
 }
+// 修改对评论的状态
+export const editCommentStatus = (articleId, status) => {
+  return request({
+    method: 'PUT',
+    url: '/mp/v1_0/comments/status',
+    data: {
+      allow_comment: status
+    },
+    params: {
+      article_id: articleId
+    }
+  })
+}
