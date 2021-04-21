@@ -8,6 +8,9 @@ Vue.use(ElementUI) // 全局注册ElementUI组件库
 
 Vue.config.productionTip = false // 禁止生产环境提示
 new Vue({
+  created () {
+    Vue.prototype.$bus = this
+  },
   router,
   render: h => h(App)
 }).$mount('#app')

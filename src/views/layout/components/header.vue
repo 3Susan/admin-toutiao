@@ -38,6 +38,7 @@ export default {
   created () {
     // 延迟获取用户信息
     this.loadingUserProfile()
+    this.$bus.$on('editUserName', this.editName)
   },
   methods: {
     handleCommand (command) {
@@ -76,6 +77,11 @@ export default {
             message: '已取消退出'
           })
         })
+    },
+    // 修改用户昵称
+    editName (name) {
+      console.log(name)
+      this.user.name = name
     }
   }
 }

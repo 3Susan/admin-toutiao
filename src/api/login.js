@@ -19,3 +19,13 @@ export function getUserProfile (token) {
     }
   })
 }
+// 修改用户信息
+export function editUserProfile (data) {
+  return request({
+    url: '/mp/v1_0/user/profile',
+    method: 'PATCH',
+    // 获取用户信息需要token令牌 设置请求头
+    // Bearer空格token(必须有空格)
+    data
+  })
+}

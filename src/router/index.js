@@ -8,6 +8,7 @@ import Article from '@/views/article'
 import Pulish from '@/views/pulish'
 import Image from '@/views/image'
 import Comment from '@/views/comment'
+import Setting from '@/views/setting'
 Vue.use(VueRouter)
 
 const routes = [
@@ -18,7 +19,7 @@ const routes = [
   },
   {
     path: '/',
-    // name: 'layout',
+    name: 'layout',
     component: Layout,
     children: [
       {
@@ -45,6 +46,11 @@ const routes = [
         path: '/comment',
         name: 'comment',
         component: Comment
+      },
+      {
+        path: '/setting',
+        name: 'setting',
+        component: Setting
       }
     ]
   }
