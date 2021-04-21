@@ -54,7 +54,7 @@
         <!-- 完整版分页器 -->
         <div class="block">
           <el-pagination
-            background="true"
+            :background="true"
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
             :current-page="currentPage"
