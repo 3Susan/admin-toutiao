@@ -37,3 +37,11 @@ export const deleteImage = (id) => {
     url: `/mp/v1_0/user/images/${id}`
   })
 }
+// 上传图片
+export const updateImage = data => {
+  return request({
+    method: 'POST',
+    url: '/mp/v1_0/user/images',
+    data
+  })
+}

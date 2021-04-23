@@ -2,7 +2,7 @@
   <div class='image-container'>
     <!-- card卡片 -->
     <el-card class="box-card" size="mini">
-      <div slot="header" class="clearfix">
+      <div slot="header" class="clearfix" v-show="headerShow">
         <!-- 面包屑 -->
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
@@ -21,17 +21,26 @@
               size="mini"
               type="success"
               @click="dialogUpdateLoader=true"
+              v-show="UpdateLoaderShow"
               >上传素材</el-button>
           </div>
         <!-- /单选钮 -->
         <!-- layout布局 -->
           <div>
             <el-row :gutter="10">
-              <el-col  :lg="4" :md="6" :sm="6" :xs="12" v-for="(img,index) in AllImages" :key="index">
+              <el-col  :lg="4" :md="6" :sm="6" :xs="12"
+              v-for="(img,index) in AllImages"
+              :key="index"
+              @click.native="selected=index"
+            >
                 <!-- 图片 -->
                 <el-image  style="height:100px" :src="img.url" fit="cover"></el-image>
                 <!-- /图片 -->
-                <div class="bottom-col">
+                <div v-show="selected==index" class="imgSelector">
+                  <img src="./assets/selected.png" alt="">
+                </div>
+                <!-- 图标 -->
+                <div class="bottom-col" v-show="iconShow">
                    <el-button size="mini"
                     :class="{'el-icon-star-on': img.is_collected,'el-icon-star-off': !img.is_collected}"
                     type="warning"
@@ -48,6 +57,7 @@
                       @click="deleteImage(img)"
                     ></el-button>
                 </div>
+                <!-- /图标 -->
               </el-col>
             </el-row>
           </div>
@@ -110,10 +120,25 @@ export default {
       ImageCount: null,
       perPage: 12,
       dialogUpdateLoader: false,
-      token: { Authorization: `Bearer ${getToken('token')}` }
+      token: { Authorization: `Bearer ${getToken('token')}` },
+      selected: null
     }
   },
   components: { },
+  props: {
+    iconShow: {
+      default: true,
+      type: Boolean
+    },
+    UpdateLoaderShow: {
+      default: true,
+      type: Boolean
+    },
+    headerShow: {
+      default: true,
+      type: Boolean
+    }
+  },
   mounted () {
     this.loadingAllImage(false)
   },
@@ -219,6 +244,20 @@ export default {
   .pagination {
     padding-left: 300px;
     margin-top: 10px;
+  }
+  .imgSelector {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+      height: 100px;
+      width: 100px;
+    }
   }
 }
 </style>

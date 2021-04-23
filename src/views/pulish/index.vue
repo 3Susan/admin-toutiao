@@ -32,6 +32,14 @@
             <el-radio :label="-1">自动</el-radio>
             <el-radio :label="0">无图</el-radio>
           </el-radio-group>
+          <template v-if="article.cover.type>0">
+            <div class="PulishImageWrap">
+              <PulishImage class="PulishImage" @emitImages="emitImages($event, index)" v-for="(item,index) in article.cover.type"
+                :key="index"
+                :urlAddress="article.cover.images[index]"
+              ></PulishImage>
+            </div>
+          </template>
         </el-form-item>
         <el-form-item label="频道"  prop="channel_id">
           <el-select v-model="article.channel_id" placeholder="请选择活动频道">
@@ -48,6 +56,7 @@
   </div>
 </template>
 <script>
+import PulishImage from './components/PulishImage'
 import { getChannels, pulishArticleInfo, getArticleInfo, editArticleInfo } from '@/api/article'
 import { handleImage } from '@/api/img'
 import {
@@ -85,7 +94,7 @@ export default {
         title: '', // 文章标题
         content: '', // 文章内容
         cover: {
-          type: 0, // 文章发布图片类型
+          type: 1, // 文章发布图片类型
           images: []
         },
         channel_id: '' // 文章列表ID
@@ -146,7 +155,7 @@ export default {
       }
     }
   },
-  components: { 'el-tiptap': ElementTiptap },
+  components: { 'el-tiptap': ElementTiptap, PulishImage },
   mounted () {
     this.loadChannels()
     const id = this.$route.query.id
@@ -198,9 +207,21 @@ export default {
           this.article = res.data
         }
       )
+    },
+    emitImages ($event, index) {
+      this.article.cover.images[index] = $event
     }
   }
 }
 </script>
 <style lang='less' scoped>
+.pulish-contanier {
+  .PulishImageWrap {
+    margin-top: 10px;
+    display: flex;
+    .PulishImage {
+      margin-right: 20px;
+    }
+  }
+}
 </style>
